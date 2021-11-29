@@ -68,6 +68,15 @@ class sssd::config {
         unless  => "/usr/bin/test \"$(authconfig ${args} --test)\" = \"$(authconfig --test)\"",
       }
     }
+    'authselect': {
+      $args = join($authconfig_args, ' ')
+
+      exec { 'authselect_update':
+        command => "authselect ${args} --update",
+        path    => ['/sbin', '/bin', '/usr/sbin', '/usr/bin'],
+        unless  => "/usr/bin/test \"$(authselect ${args} --test)\" = \"$(authselect --test)\"",
+      }
+    }
     default: {}
   }
 
